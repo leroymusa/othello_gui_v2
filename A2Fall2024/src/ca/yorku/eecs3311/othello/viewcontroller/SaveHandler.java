@@ -6,6 +6,10 @@ import javafx.event.EventHandler;
 
 import java.io.IOException;
 
+
+/**
+ * Handles saving the current state of the Othello game to a file.
+ */
 public class SaveHandler implements EventHandler<ActionEvent> {
     private final Othello othello;
 

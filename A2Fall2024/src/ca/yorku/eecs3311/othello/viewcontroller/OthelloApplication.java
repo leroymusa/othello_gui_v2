@@ -1,8 +1,7 @@
 package ca.yorku.eecs3311.othello.viewcontroller;
+import ca.yorku.eecs3311.othello.model.*;
 
 import java.util.List;
-
-import ca.yorku.eecs3311.othello.model.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -20,31 +19,33 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- * 
- * An OthelloApplication creates and runs an Othello game. 
- * It attaches and creates the Models, Views, and Controllers to run the game.
- *
- */
 public class OthelloApplication extends Application {
+	// REMEMBER: To run this in the lab put 
+	// --module-path "/usr/share/openjfx/lib" --add-modules javafx.controls,javafx.fxml
+	// in the run configuration under VM arguments.
+	// You can import the JavaFX.prototype launch configuration and use it as well.
+	
 	@Override
 	public void start(Stage stage) throws Exception {
+		// Create and hook up the Model, View and the controller
+
 		// MODEL
 		Othello othello=new Othello();
 		Hints hints = new Hints(othello);
-		othello.attach(hints); // MODEL->MODEL
+		// MODEL->MODEL
+		othello.attach(hints);
 		TimeTrackerSingleton timer = TimeTrackerSingleton.getInstance(othello);
 		
 		
 		// VIEW
-		DiscCounter p1Count = new DiscCounter(OthelloBoard.P1 + " : "+othello.getCount(OthelloBoard.P1), OthelloBoard.P1);
-		DiscCounter p2Count = new DiscCounter(OthelloBoard.P2 + " : "+othello.getCount(OthelloBoard.P2), OthelloBoard.P2);
+		DiscCounter p1Count =new DiscCounter(OthelloBoard.P1+" : "+othello.getCount(OthelloBoard.P1),OthelloBoard.P1);
+		DiscCounter p2Count= new DiscCounter(OthelloBoard.P2+" : "+othello.getCount(OthelloBoard.P2),OthelloBoard.P2);
 		p1Count.setEditable(false);
 		p2Count.setEditable(false);
-		GameStatusTracker status = new GameStatusTracker(OthelloBoard.P1 + "'s Turn");
+		GameStatusTracker status= new GameStatusTracker(OthelloBoard.P1 +"'s Turn");
 		status.setEditable(false);
-		MoveStrategyTracker currentPlayerTypeP1 = new MoveStrategyTracker(othello.getPlayer1());
-		MoveStrategyTracker currentPlayerTypeP2 = new MoveStrategyTracker(othello.getPlayer2());
+		MoveStrategyTracker currentPlayerTypeP1=new MoveStrategyTracker(othello.getPlayer1());
+		MoveStrategyTracker currentPlayerTypeP2=new MoveStrategyTracker(othello.getPlayer2());
 		currentPlayerTypeP1.setEditable(false);
 		currentPlayerTypeP2.setEditable(false);
 		TimerDisplay timedisplay = new TimerDisplay(timer);
@@ -52,7 +53,7 @@ public class OthelloApplication extends Application {
 
 		MenuBar menuBar = new MenuBar();
 		Menu menu = new Menu("Hint Menu");
-		HintMenuItem randomMenuItem = new HintMenuItem(hints, "random");
+		HintMenuItem randomMenuItem=new HintMenuItem(hints, "random");
 		menu.getItems().add(randomMenuItem);
 		HintMenuItem greedyMenuItem = new HintMenuItem(hints, "greedy");
 		menu.getItems().add(greedyMenuItem);
@@ -60,19 +61,19 @@ public class OthelloApplication extends Application {
 		
 		ListView<String> historyList = new ListView<>();
 		historyList.setPrefSize(200, 400);
-		Button hVsHuman = new Button("Human vs. Human");
-		hVsHuman.setPrefSize(190, 20);
-		Button hVsRandom = new Button("Human vs. Random");
-		hVsRandom.setPrefSize(190, 20);
-		Button hVsGreedy = new Button("Human vs. Greedy");
-		hVsGreedy.setPrefSize(190, 20);
+		Button HumanVSHuman = new Button("Human vs. Human");
+		HumanVSHuman.setPrefSize(190, 20);
+		Button HumanVSRandom = new Button("Human vs. Random");
+		HumanVSRandom.setPrefSize(190, 20);
+		Button HumanVSGreedy = new Button("Human vs. Greedy");
+		HumanVSGreedy.setPrefSize(190, 20);
 
-		Button randomVsRandom = new Button("Random vs. Random");
-		Button randomVsGreedy = new Button("Random vs. Greedy");
-		Button greedyVsGreedy = new Button("Greedy vs. Greedy");
-		randomVsRandom.setPrefSize(190, 20);
-		randomVsGreedy.setPrefSize(190, 20);
-		greedyVsGreedy.setPrefSize(190, 20);
+		Button RandomVSRandom=new Button("Random vs. Random");
+		Button RandomVSGreedy=new Button("Random vs. Greedy");
+		Button GreedyVSGreedy=new Button("Greedy vs. Greedy");
+		RandomVSRandom.setPrefSize(190, 20);
+		RandomVSGreedy.setPrefSize(190, 20);
+		GreedyVSGreedy.setPrefSize(190, 20);
 		Button play = new Button("Play");
 		play.setBackground(new Background(new BackgroundFill(Color.web("#4BAAAA"), new CornerRadii(2), null)));
 		play.setPrefSize(190, 20);
@@ -112,16 +113,16 @@ public class OthelloApplication extends Application {
 		grid.add(timedisplay, 9, 3, 2, 1);
 		grid.add(box, 9, 4);
 		grid.add(play, 10, 4);
-		grid.add(hVsHuman, 9, 5);
-		grid.add(hVsRandom, 9, 6);
-		grid.add(hVsGreedy, 10, 5);
+		grid.add(HumanVSHuman, 9, 5);
+		grid.add(HumanVSRandom, 9, 6);
+		grid.add(HumanVSGreedy, 10, 5);
 		grid.add(currentPlayerTypeP1, 9, 0);
 		grid.add(currentPlayerTypeP2, 10, 0);
 		
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				// VIEW
-				BoardSquare boardSquare = new BoardSquare(othello,row,col,hints);
+				Tile boardSquare = new Tile(othello,row,col,hints);
 				// CONTROLLER
 				MoveAttemptEventHandler moveToClick = new MoveAttemptEventHandler(othello, historyList);
 				// VIEW->CONTROLLER hookup
@@ -162,21 +163,21 @@ public class OthelloApplication extends Application {
 		PlayEventHandler playHandler = new PlayEventHandler(timer);
 		RedoInvoker redoInvoker = new RedoInvoker(othello);
 		SaveHandler saveHandler = new SaveHandler(othello);
-		LoadHandler loadHandler = new LoadHandler(othello, stage, grid, status, timedisplay, historyList);
-		randomVsRandom.addEventHandler(ActionEvent.ACTION, new OpponentEventHandler(othello));
-		randomVsGreedy.addEventHandler(ActionEvent.ACTION, new OpponentEventHandler(othello));
-		greedyVsGreedy.addEventHandler(ActionEvent.ACTION, new OpponentEventHandler(othello));
+		LoadHandler loadHandler = new LoadHandler(othello,stage,grid,status,timedisplay,historyList);
+		RandomVSRandom.addEventHandler(ActionEvent.ACTION,new OpponentEventHandler(othello));
+		RandomVSGreedy.addEventHandler(ActionEvent.ACTION,new OpponentEventHandler(othello));
+		GreedyVSGreedy.addEventHandler(ActionEvent.ACTION,new OpponentEventHandler(othello));
 
 		// Add buttons to the grid
-		grid.add(randomVsRandom, 9, 7);
-		grid.add(randomVsGreedy, 10, 7);
-		grid.add(greedyVsGreedy, 9, 8);
+		grid.add(RandomVSRandom,9,7);
+		grid.add(RandomVSGreedy,10,7);
+		grid.add(GreedyVSGreedy,9,8);
 		// VIEW->CONTROLLER hookup
 		randomMenuItem.addEventHandler(ActionEvent.ACTION, handleRandomHint);
 		greedyMenuItem.addEventHandler(ActionEvent.ACTION, handleGreedyHint);
-		hVsHuman.addEventHandler(ActionEvent.ACTION, humanOpponentHandler);
-		hVsRandom.addEventHandler(ActionEvent.ACTION, randomOpponentHandler);
-		hVsGreedy.addEventHandler(ActionEvent.ACTION, greedyOpponentHandler);
+		HumanVSHuman.addEventHandler(ActionEvent.ACTION, humanOpponentHandler);
+		HumanVSRandom.addEventHandler(ActionEvent.ACTION, randomOpponentHandler);
+		HumanVSGreedy.addEventHandler(ActionEvent.ACTION, greedyOpponentHandler);
 		restart.addEventHandler(ActionEvent.ACTION, restartHandler);
 		undo.addEventHandler(ActionEvent.ACTION, undoInvoker);
 		play.addEventHandler(ActionEvent.ACTION, playHandler);

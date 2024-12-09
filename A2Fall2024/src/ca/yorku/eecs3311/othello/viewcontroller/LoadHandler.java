@@ -12,12 +12,17 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * Handles the loading of a saved Othello game state from a file.
+ * Updates the game board, turn feedback, score display, and history list upon successful loading.
+ */
 public class LoadHandler implements EventHandler<ActionEvent> {
     private final Othello othello;
     private final Stage stage;
     private final GridPane boardGrid;
-    private final GameStatusTracker turnText; // Game status tracker for turn
-    private final TimerDisplay scoreText;    // Timer display for scores
+    private final GameStatusTracker turnText;
+    private final TimerDisplay scoreText; 
     private final ListView<String> historyList;
 
     public LoadHandler(Othello othello, Stage stage, GridPane boardGrid, GameStatusTracker turnText, TimerDisplay scoreText, ListView<String> historyList) {
@@ -70,8 +75,8 @@ public class LoadHandler implements EventHandler<ActionEvent> {
 
     private void updateBoard(GridPane boardGrid, Othello othello) {
         for (javafx.scene.Node node : boardGrid.getChildren()) {
-            if (node instanceof BoardSquare) {
-                ((BoardSquare) node).update(othello);
+            if (node instanceof Tile) {
+                ((Tile) node).update(othello);
             }
         }
     }

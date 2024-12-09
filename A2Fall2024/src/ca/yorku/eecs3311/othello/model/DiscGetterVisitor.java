@@ -3,7 +3,7 @@ package ca.yorku.eecs3311.othello.model;
 //import ca.yorku.eecs3311.othello.model.DiscGetterVisitorInterface;
 /**
  * 
- * Visits OthelloBoard and extracts the disc at a certain position. Implmentation of a visitor
+ * Visits OthelloBoard and extracts the disc at a certain position. Implementation of a visitor
  * 
  * @autor leroy musa
  */
