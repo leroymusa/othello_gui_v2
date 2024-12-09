@@ -1,10 +1,10 @@
-O
-7
-        
-  X     
- X X    
-  XOOOO 
-   XX   
-   X    
-        
-        
+ 
+60
+XOOOOOOO
+XXOXXOOO
+XXXOOOOO
+OXXOOXOO
+XXOOOOXO
+XXOXXOXO
+OOOOOXOO
+OOOOOOOO

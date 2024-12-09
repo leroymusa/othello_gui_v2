@@ -32,7 +32,7 @@ public class RestartEventHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		TimeQuery query = new TimeQuery();
+		TimerPrompt query = new TimerPrompt();
 		this.othello.resetOthello();
 		query.run();
 		this.timer.startTimer();

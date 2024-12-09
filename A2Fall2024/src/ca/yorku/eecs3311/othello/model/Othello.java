@@ -571,12 +571,14 @@ public class Othello extends Observable {
 	
 	
 	
-	//So I made these functions for the sake of hypothesis
-	//As we know that AI will make the move almost instantaneously
-	//A undo will just lead to a quick redo
-	//This can cause the app to freeze
-	//I made these for the sake to show understanding
-	
+	/**
+	 * Performs an undo operation specifically tailored for AI moves.
+	 * Pushes the current state to the redo stack and restores the previous game state.
+	 * If the undo operation results in an AI player's turn, it will trigger the AI to make a move.
+	 * <p>
+	 * Note: The observer notification is commented out to prevent app freezing
+	 * when AI makes rapid undo/redo operations.
+	 */
 	public void aiUndo() {
 	    if (!undoStack.isEmpty()) {
 	        redoStack.push(this.copy());
@@ -593,8 +595,11 @@ public class Othello extends Observable {
 	    }
 	}
 
-	//Funny bug I am TODOing is AI-specific undo and redos work
-	//after the initial Undo
+	/**
+	 * Performs a redo operation specifically tailored for AI moves.
+	 * Restores the next game state from the redo stack and pushes the current state to the undo stack.
+	 * If the redo operation results in an AI player's turn, it will trigger the AI to make a move.
+	 */
 	public void aiRedo() {
 	    if (!redoStack.isEmpty()) {
 	        Othello nextState = redoStack.pop();

@@ -14,7 +14,7 @@ public class PlayEventHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		TimeQuery query = new TimeQuery();
+		TimerPrompt query = new TimerPrompt();
 		((Node) event.getSource()).setVisible(false);
 		query.run();
 		this.timer.startTimer();
